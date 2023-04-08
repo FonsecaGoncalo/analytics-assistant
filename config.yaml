@@ -38,5 +38,5 @@ openai:
           Answer: Select 1 From t;
         - The answer MUST NOT contain anything else other than the query
       parse_query_message: |
-        If there is a query in the following message return it to me other wise answer with an empty string:
+        If there is a query in the following message return it to me other wise answer with "No query was found.":
         {{ .Query }}
