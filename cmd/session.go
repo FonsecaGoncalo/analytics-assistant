@@ -85,7 +85,7 @@ var sessionCmd = &cobra.Command{
 
 		reader := bufio.NewReader(os.Stdin)
 		for {
-			fmt.Print("🧍Prompt: ")
+			fmt.Print("🧍 Prompt: ")
 			input, err := reader.ReadString('\n')
 			if err != nil {
 				fmt.Println("Error reading input:", err)
@@ -103,7 +103,7 @@ var sessionCmd = &cobra.Command{
 				fmt.Println("Error handling prompt", err)
 				return
 			}
-			fmt.Println("🤖Analytics assistant: " + answer)
+			fmt.Println("🤖 Analytics assistant: " + answer)
 		}
 	},
 }
