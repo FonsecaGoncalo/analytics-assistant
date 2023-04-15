@@ -1,18 +1,30 @@
 package config
 
 import (
+	"bytes"
+	"embed"
 	"fmt"
+	"io/fs"
 	"os"
 
 	"github.com/spf13/viper"
 )
 
+//go:embed config.yaml
+var configFile embed.FS
+
 func init() {
 	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
 	viper.SetConfigType("yaml")
 
-	if err := viper.ReadInConfig(); err != nil {
+	// Modify the init function to use the embedded config.yaml
+	f, err := fs.ReadFile(configFile, "config.yaml")
+	if err != nil {
+		panic(err)
+	}
+
+	err = viper.ReadConfig(bytes.NewReader(f))
+	if err != nil {
 		panic(err)
 	}
 }
