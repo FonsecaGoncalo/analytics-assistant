@@ -1,8 +1,10 @@
 #!/bin/bash
 
+set -e
+
 TOOL_NAME="analytics-assistant"
-RELEASE_URL="https://github.com/FonsecaGoncalo/analytics-assistant/releases/latest"
 VERSION="v0.0.1-alpha"
+RELEASE_URL="https://github.com/FonsecaGoncalo/analytics-assistant/releases/download/${VERSION}"
 
 # Get the operating system and architecture information
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
