@@ -6,6 +6,12 @@ The Data Analytics Assistant is a command-line interface (CLI) tool designed to 
 - A MySQL database
 - An OpenAI API key
 ## Installation
+
+```bash
+curl -s https://raw.githubusercontent.com/FonsecaGoncalo/analytics-assistant/main/installer.sh | bash
+```
+
+### Install From Sources
 - Clone the repository:
 ```bash
 git clone https://github.com/FonsecaGoncalo/analytics-assistant.git
