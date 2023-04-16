@@ -60,11 +60,7 @@ var sessionCmd = &cobra.Command{
 			return
 		}
 
-		systemMessages, err := renderSystemMessages(config.GetAnalystSystemMessages(), ddl)
-		if err != nil {
-			fmt.Println("Error rendering system messages", err)
-			return
-		}
+		systemMessages := renderSystemMessages(config.GetAnalystSystemMessages(), ddl)
 
 		if contextFile != "" {
 			c, err := readFileContents(contextFile)
@@ -72,11 +68,8 @@ var sessionCmd = &cobra.Command{
 				fmt.Println("Error reading file", err)
 				return
 			}
-			context, err := renderTemplate(config.GetAnalystContextMessages(), &MessageData{Context: c})
-			if err != nil {
-				fmt.Println("Error rendering context", err)
-				return
-			}
+			context := renderTemplate(config.GetAnalystContextMessages(), &MessageData{Context: c})
+
 			systemMessages = append(systemMessages, context)
 		}
 
@@ -109,21 +102,13 @@ var sessionCmd = &cobra.Command{
 }
 
 func handlePrompt(input string, analyst *openai.Session, queryParser *openai.Session, dbc *db.DBConnection) (string, error) {
-	response, err := analyst.UserPrompt(input)
-	if err != nil {
-		return "", err
-	}
+	response := analyst.UserPrompt(input)
 
-	m, err := renderTemplate(config.GetQueryParserMessage(), &MessageData{
+	m := renderTemplate(config.GetQueryParserMessage(), &MessageData{
 		Query: response,
 	})
-	if err != nil {
-		return "", err
-	}
-	query, err := queryParser.UserPrompt(m)
-	if err != nil {
-		return "", nil
-	}
+
+	query := queryParser.UserPrompt(m)
 	if query == "No query was found." {
 		return response, nil
 	}
@@ -134,19 +119,16 @@ func handlePrompt(input string, analyst *openai.Session, queryParser *openai.Ses
 		return "", err
 	}
 
-	m, err = renderTemplate(config.GetAnalystQueryResultsMessage(), &MessageData{
+	m = renderTemplate(config.GetAnalystQueryResultsMessage(), &MessageData{
 		QueryResults: queryResult,
 		Query:        query,
 		Prompt:       input,
 	})
-	if err != nil {
-		return "", err
-	}
 
-	return analyst.SystemPrompt(m)
+	return analyst.SystemPrompt(m), nil
 }
 
-func renderSystemMessages(messageTemplates []string, ddl string) ([]string, error) {
+func renderSystemMessages(messageTemplates []string, ddl string) []string {
 	m := make([]string, len(messageTemplates))
 
 	data := &MessageData{
@@ -154,31 +136,27 @@ func renderSystemMessages(messageTemplates []string, ddl string) ([]string, erro
 	}
 
 	for i := range messageTemplates {
-		renderedTemplate, err := renderTemplate(messageTemplates[i], data)
-
-		if err != nil {
-			return nil, err
-		}
+		renderedTemplate := renderTemplate(messageTemplates[i], data)
 
 		m[i] = renderedTemplate
 	}
 
-	return m, nil
+	return m
 }
 
-func renderTemplate(tmpl string, data *MessageData) (string, error) {
+func renderTemplate(tmpl string, data *MessageData) string {
 	t, err := template.New("message").Parse(tmpl)
 	if err != nil {
-		return "", err
+		panic("Error parsing template")
 	}
 
 	var buf strings.Builder
 	err = t.Execute(&buf, data)
 	if err != nil {
-		return "", err
+		panic("Error rendering the template")
 	}
 
-	return buf.String(), nil
+	return buf.String()
 }
 
 func readFileContents(filename string) (string, error) {

@@ -5,7 +5,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "analytics",
+	Use:   "analytics-assistant",
 	Short: "A CLI tool for interacting with a data analyst",
 	Long:  `This CLI tool enables you to interact with a data analyst and connect to a MySQL database to obtain data insights using natural language.`,
 }

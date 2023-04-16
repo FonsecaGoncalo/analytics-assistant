@@ -3,7 +3,6 @@ package openai
 import (
 	"analytics/config"
 	"context"
-	"fmt"
 	"github.com/sashabaranov/go-openai"
 	"strings"
 )
@@ -33,15 +32,15 @@ func NewOpenAISession(systemMessages []string, temperature float32) *Session {
 	}
 }
 
-func (s *Session) SystemPrompt(prompt string) (string, error) {
+func (s *Session) SystemPrompt(prompt string) string {
 	return s.prompt(prompt, openai.ChatMessageRoleSystem)
 }
 
-func (s *Session) UserPrompt(prompt string) (string, error) {
+func (s *Session) UserPrompt(prompt string) string {
 	return s.prompt(prompt, openai.ChatMessageRoleUser)
 }
 
-func (s *Session) prompt(prompt string, role string) (string, error) {
+func (s *Session) prompt(prompt string, role string) string {
 	s.messages = append(s.messages, openai.ChatCompletionMessage{
 		Role:    role,
 		Content: prompt,
@@ -57,15 +56,14 @@ func (s *Session) prompt(prompt string, role string) (string, error) {
 	)
 
 	if err != nil {
-		fmt.Println("Error prompting open ai")
-		return "", err
+		panic("Error prompting open ai")
 	}
 
 	if len(resp.Choices) == 0 {
-		return "", fmt.Errorf("no choices returned from the OpenAI API")
+		panic("no choices returned from the OpenAI API")
 	}
 
 	s.messages = append(s.messages, resp.Choices[0].Message)
 
-	return strings.TrimSpace(resp.Choices[0].Message.Content), nil
+	return strings.TrimSpace(resp.Choices[0].Message.Content)
 }
