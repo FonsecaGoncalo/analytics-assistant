@@ -1,6 +1,8 @@
 # Analytics Assistant CLI
 The Data Analytics Assistant is a command-line interface (CLI) tool designed to assist users in obtaining insights from their MySQL databases using natural language questions. By leveraging the power of OpenAI's API, users can easily ask questions about their data, and the assistant will provide answers based on the information stored in the database.
 
+![DEMO_1](./assets/demo_1.gif)
+
 ## Requirements
 - Go 1.18 or later
 - A MySQL database
@@ -52,9 +54,6 @@ analytics-assistant session --db-url "tcp(localhost:3306)/your_database_name" --
 Replace `your_database_name`, `your_username`, and `your_password` with the appropriate values for your MySQL database. This will initiate an interactive session with the data analyst assistant.
 
 To provide the assistant with additional context when responding to questions, supply a file containing business rules or database field descriptions using the `--context-file` flag.
-
-### Demo
-![DEMO_1](./assets/demo_1.gif)
 
 ## License
 This project is licensed under the [MIT License](./LICENSE).
