@@ -8,11 +8,11 @@ The Data Analytics Assistant is a command-line interface (CLI) tool designed to 
 ## Installation
 - Clone the repository:
 ```bash
-git clone https://github.com/FonsecaGoncalo/openai-analytics-assistant.git
+git clone https://github.com/FonsecaGoncalo/analytics-assistant.git
 ```
 Navigate to the project directory:
 ```bash
-cd openai-analytics-assistant
+cd analytics-assistant
 ```
 Build the CLI tool:
 ```bash
