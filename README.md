@@ -47,7 +47,7 @@ export OPENAI_API_KEY="{you_openai_api_key}"
 
 And then run:
 ```bash
-./analytics-assistant session --db-url "tcp(localhost:3306)/your_database_name" --db-username "your_username" --db-password "your_password"
+analytics-assistant session --db-url "tcp(localhost:3306)/your_database_name" --db-username "your_username" --db-password "your_password"
 ```
 Replace `your_database_name`, `your_username`, and `your_password` with the appropriate values for your MySQL database. This will initiate an interactive session with the data analyst assistant.
 
