@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/sashabaranov/go-openai v1.7.0
+	github.com/sashabaranov/go-openai v1.32.3
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1
 )
